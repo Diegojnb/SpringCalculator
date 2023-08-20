@@ -9,6 +9,9 @@ import com.diegojnb.calculator.application.CalculatorService;
 import com.diegojnb.calculator.application.TraceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -28,10 +31,10 @@ public class CalculatorControllerTests {
     @Test
     void testSum() throws Exception {
         double expectedResult = 8;
-        double a = 5;
-        double b = 3;
-
-        mockMvc.perform(get("/sum").param("a", String.valueOf(a)).param("b", String.valueOf(b)))
+        double v1 = 5;
+        double v2 = 3;
+        when(calculatorService.sum(any(), any())).thenReturn(expectedResult);
+        mockMvc.perform(get("/sum").param("v1", String.valueOf(v1)).param("v2", String.valueOf(v2)))
             .andExpect(status().isOk())
             .andExpect(content().string(String.valueOf(expectedResult)));
     }
@@ -39,10 +42,10 @@ public class CalculatorControllerTests {
     @Test
     void testSubtract() throws Exception {
         double expectedResult = 7;
-        double a = 10;
-        double b = 3;
-
-        mockMvc.perform(get("/subtract").param("a", String.valueOf(a)).param("b", String.valueOf(b)))
+        double v1 = 10;
+        double v2 = 3;
+        when(calculatorService.substract(any(), any())).thenReturn(expectedResult);
+        mockMvc.perform(get("/substract").param("v1", String.valueOf(v1)).param("v2", String.valueOf(v2)))
             .andExpect(status().isOk())
             .andExpect(content().string(String.valueOf(expectedResult)));
     }
